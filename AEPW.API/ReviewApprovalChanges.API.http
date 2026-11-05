@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:5075
+
+### Preview review approval changes when enabling and disabling stages
+POST {{baseUrl}}/api/Review/GetApprovalChanges
+Content-Type: application/json
+
+[
+  {
+    "stageCode": 3,
+    "isActive": false
+  },
+  {
+    "stageCode": 4,
+    "isActive": true
+  }
+]

@@ -1,0 +1,40 @@
+using System.Diagnostics;
+
+namespace AEPW.API.Middleware;
+
+/// <summary>
+/// Adds a unique X-Correlation-Id header to every request/response pair.
+/// If the caller supplies the header it is propagated; otherwise a new GUID is generated.
+/// The correlation ID is pushed into the log scope so all log entries for the request carry it.
+/// </summary>
+public sealed class CorrelationIdMiddleware
+{
+    private const string CorrelationIdHeader = "X-Correlation-Id";
+
+    private readonly RequestDelegate _next;
+    private readonly ILogger<CorrelationIdMiddleware> _logger;
+
+    public CorrelationIdMiddleware(RequestDelegate next, ILogger<CorrelationIdMiddleware> logger)
+    {
+        _next   = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var correlationId = context.Request.Headers.TryGetValue(CorrelationIdHeader, out var existing)
+            ? existing.ToString()
+            : Activity.Current?.TraceId.ToString() ?? Guid.NewGuid().ToString("N");
+
+        context.Items[CorrelationIdHeader] = correlationId;
+        context.Response.Headers[CorrelationIdHeader] = correlationId;
+
+        using (_logger.BeginScope(new Dictionary<string, object>
+               {
+                   [CorrelationIdHeader] = correlationId
+               }))
+        {
+            await _next(context);
+        }
+    }
+}

@@ -1,0 +1,4 @@
+AEPW.API/appsettings.json
+AEPW.API/appsettings.Production.json
+.github/
+.gitignore

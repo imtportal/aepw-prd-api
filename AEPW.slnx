@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AEPW.API/AEPW.API.csproj" />
+  <Project Path="AEPW.Application/AEPW.Application.csproj" />
+  <Project Path="AEPW.Domain/AEPW.Domain.csproj" />
+  <Project Path="AEPW.Infrastructure/AEPW.Infrastructure.csproj" />
+</Solution>

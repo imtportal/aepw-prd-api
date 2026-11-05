@@ -1,0 +1,25 @@
+@AEPW.API_HostAddress = http://localhost:5075
+
+### Get all email notification interpolation keywords
+GET {{AEPW.API_HostAddress}}/api/EmailNotificationTemplate/interpolation-keywords
+Accept: application/json
+
+### Get all active email notification templates
+GET {{AEPW.API_HostAddress}}/api/EmailNotificationTemplate/email-templates
+Accept: application/json
+
+### Create an email notification template
+POST {{AEPW.API_HostAddress}}/api/EmailNotificationTemplate
+Content-Type: application/json
+
+{
+  "emailNotificationTemplateId": 0,
+  "templateCode": "EXAMPLE",
+  "templateName": "Example notification",
+  "subjectTemplate": "Notification for {{cpmName}}",
+  "bodyTemplate": "<p>Hello {{cpmName}}</p>",
+  "recipientTo": "{{cpmEmail}}",
+  "recipientCc": null,
+  "isActive": true,
+  "updatedBy": 1
+}
