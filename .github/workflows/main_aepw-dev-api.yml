@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: 'aepw-prd-api'          # <-- target web app name
+  AZURE_WEBAPP_NAME: 'aepw-imt-api'          # <-- target web app name
   DOTNET_VERSION: '10.x'
   BUILD_CONFIGURATION: 'Release'
 
